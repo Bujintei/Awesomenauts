@@ -4,6 +4,10 @@ game.resources = [
 	 * @example
 	 * {name: "example", type:"image", src: "data/img/example.png"},
 	 */
+	 {name: "background-tiles", type:"image", src: "data/img/background-tiles.png"},
+	 {name: "meta-tiles", type:"image", src: "data/img/meta-tiles.png"},
+	 //graphics for Awesomenauts that the game would use.
+
 
 	/* Atlases 
 	 * @example
@@ -15,6 +19,8 @@ game.resources = [
 	 * {name: "example01", type: "tmx", src: "data/map/example01.tmx"},
 	 * {name: "example01", type: "tmx", src: "data/map/example01.json"},
  	 */
+ 	 {name: "level01", type: "tmx", src: "data/map/test.tmx"},
+ 	 //maps for our game
 
 	/* Background music. 
 	 * @example
