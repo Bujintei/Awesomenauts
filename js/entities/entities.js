@@ -12,7 +12,7 @@ game.PlayerEntity = me.Entity.extend({
 			}
 		}]);
 
-		this.body.setVelocity(5,0); //our character moves 5 units to the right
+		this.body.setVelocity(5, 20); //our character moves 5 units to the right
 	},
 
 	update: function(delta) {
