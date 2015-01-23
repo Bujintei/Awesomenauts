@@ -39,7 +39,9 @@ var game = {
 
 	// Run on game resources loaded.
 	"loaded" : function () {
-		me.pool.register("player", game.PlayerEntity, true);
+		me.pool.register("player", game.PlayerEntity, true); //loads our character on start
+		//true lets us make multiple instances of player(we can re add player or make a sep)
+		
 		me.state.set(me.state.MENU, new game.TitleScreen());
 		me.state.set(me.state.PLAY, new game.PlayScreen());
 
