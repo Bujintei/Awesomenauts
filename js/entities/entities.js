@@ -13,6 +13,12 @@ game.PlayerEntity = me.Entity.extend({
 		}]);
 
 		this.body.setVelocity(5, 20); //our character moves 5 units to the right
+
+		this.renderable.addAnimation("idle", [78]); //sets idle animation to number 78
+		this.renderable.addAnimation("walk", [117, 118, 119, 120, 121, 122, 123, 124, 125], 80); //walking uses animations 117-125 and 80 milliseconds through each frame
+
+		this.renderable.setCurrentAnimation("idle"); //sets our starting animation as idle
+
 	},
 
 	update: function(delta) {
@@ -21,12 +27,25 @@ game.PlayerEntity = me.Entity.extend({
 			//setVelocity() and multiplying it by me.timer.tick.
 			//me.timer.tick makes the movement look smooth
 			this.body.vel.x += this.body.accel.x * me.timer.tick;
+			this.flipX(true); //flips our walking animation this is facing the left to the right instead
 		}
 		else{
 			this.body.vel.x = 0;
 		}
 
-		this.body.update(delta) ;
+		if(this.body.vel.x !== 0 ) { //only goes to walk animation if hes moving
+			if(!this.renderable.isCurrentAnimation("walk")) { //don't start walking animation if you are already walking
+			this.renderable.setCurrentAnimation("walk");
+			}
+		}
+		else{
+			this.renderable.setCurrentAnimation("idle"); //if we're not walking, our animation would b idle
+		}
+
+
+		this.body.update(delta) ; //animation is updating on the fly
+
+		this._super(me.Entity, "update", [delta]); //updates our animations gfor me.Entity
 		return true;
 	}
 });
