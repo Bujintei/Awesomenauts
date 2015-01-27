@@ -51,7 +51,7 @@ game.PlayerEntity = me.Entity.extend({
 });
 
 game.PlayerBaseEntity = me.Entity.extend({
-	init : function(x, y, settings) {
+	init : function(x, y, settings) { //same like PlayerEntity above for our constructor function
 		this._super(me.Entity, 'init', [x, y, {
 			image: "towers",
 			width: 100,
@@ -62,22 +62,22 @@ game.PlayerBaseEntity = me.Entity.extend({
 				return (new me.Rect(0, 0, 100, 100)).toPolygon();
 			}
 		}]);
-		this.broken = false;
-		this.health = 10;
-		this.alwaysUpdate = true;
-		this.body.onCollision = this.onCollision.bind(this);
+		this.broken = false; //tower has not been destroyed
+		this.health = 10; //sets its hp to 10
+		this.alwaysUpdate = true; //always updates even if its not on screen
+		this.body.onCollision = this.onCollision.bind(this); //if you can colide with turret/tower
 
-		this.type = "PlayerBaseEntity";
+		this.type = "PlayerBaseEntity"; //type for other collisions so we can check what we're running into when we're hitting otherstuff
 
 	},
 
-	update:function(delta) {
-		if(this.health<=0) {
+	update:function(delta) { //delta represents time from last update
+		if(this.health<=0) { //if health is less than or equal to 0, then our turret is dead
 			this.broken = true;
 		}
-		this.body.update(delta);
+		this.body.update(delta); //updates(herpderp)
 
-		this._super(me.Entity, "update", [delta]);
+		this._super(me.Entity, "update", [delta]); //call super in any update function and pass it as a update function then re
 		return true;
 	},
 
@@ -87,8 +87,8 @@ game.PlayerBaseEntity = me.Entity.extend({
 
 });
 
-game.EnemyBaseEntity = me.Entity.extend({
-	init : function(x, y, settings) {
+game.EnemyBaseEntity = me.Entity.extend({ //same freakin thing as the player base entity
+	init : function(x, y, settings) { 
 		this._super(me.Entity, 'init', [x, y, {
 			image: "towers",
 			width: 100,
