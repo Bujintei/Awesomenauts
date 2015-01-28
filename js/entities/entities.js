@@ -17,6 +17,7 @@ game.PlayerEntity = me.Entity.extend({
 
 		this.renderable.addAnimation("idle", [78]); //sets idle animation to number 78
 		this.renderable.addAnimation("walk", [117, 118, 119, 120, 121, 122, 123, 124, 125], 80); //walking uses animations 117-125 and 80 milliseconds through each frame
+		this.renderable.addAnimation("attack", [65, 66, 67, 68, 69, 70, 71, 72], 80); //attack animation uses animations 65-72 and 80 milliseconds through each frame
 
 		this.renderable.setCurrentAnimation("idle"); //sets our starting animation as idle
 
@@ -34,7 +35,14 @@ game.PlayerEntity = me.Entity.extend({
 			this.body.vel.x = 0;
 		}
 
-		if(this.body.vel.x !== 0 ) { //only goes to walk animation if hes moving
+		if(me.input.isKeyPressed("attack")) {
+			if(!this.renderable.isCurrentAnimation("attack")) {
+				this.renderable.setCurrentAnimation("attack", "idle");
+				this.renderable.setAnimationFrame();
+			}
+		}
+		
+		else if(this.body.vel.x !== 0 ) { //only goes to walk animation if hes moving
 			if(!this.renderable.isCurrentAnimation("walk")) { //don't start walking animation if you are already walking
 			this.renderable.setCurrentAnimation("walk");
 			}
@@ -43,6 +51,7 @@ game.PlayerEntity = me.Entity.extend({
 			this.renderable.setCurrentAnimation("idle"); //if we're not walking, our animation would b idle
 		}
 
+		
 
 		this.body.update(delta) ; //animation is updating on the fly
 

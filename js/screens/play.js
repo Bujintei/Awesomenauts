@@ -12,6 +12,7 @@ game.PlayScreen = me.ScreenObject.extend({
 		me.game.world.addChild(player, 5); //adds him to our world // z variable is how close he is to the screen //higher this number the closer he is to the screen
 
 		me.input.bindKey(me.input.KEY.RIGHT, "right"); //binds our right arrow key to move our character to the right and only to the right hence the code
+		me.input.bindKey(me.input.KEY.A, "attack");
 
 		// add our HUD to the game world
 		this.HUD = new game.HUD.Container();
