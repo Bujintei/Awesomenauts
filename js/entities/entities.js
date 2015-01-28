@@ -13,6 +13,7 @@ game.PlayerEntity = me.Entity.extend({
 		}]);
 
 		this.body.setVelocity(5, 20); //our character moves 5 units to the right
+		me.game.viewport.follow(this.pos, me.game.viewport.AXIS.BOTH);
 
 		this.renderable.addAnimation("idle", [78]); //sets idle animation to number 78
 		this.renderable.addAnimation("walk", [117, 118, 119, 120, 121, 122, 123, 124, 125], 80); //walking uses animations 117-125 and 80 milliseconds through each frame
@@ -53,7 +54,7 @@ game.PlayerEntity = me.Entity.extend({
 game.PlayerBaseEntity = me.Entity.extend({
 	init : function(x, y, settings) { //same like PlayerEntity above for our constructor function
 		this._super(me.Entity, 'init', [x, y, {
-			image: "towers",
+			image: "tower",
 			width: 100,
 			height:100,
 			spritewidth: "100",
@@ -66,14 +67,19 @@ game.PlayerBaseEntity = me.Entity.extend({
 		this.health = 10; //sets its hp to 10
 		this.alwaysUpdate = true; //always updates even if its not on screen
 		this.body.onCollision = this.onCollision.bind(this); //if you can colide with turret/tower
-
+		console.log("init");
 		this.type = "PlayerBaseEntity"; //type for other collisions so we can check what we're running into when we're hitting otherstuff
+
+		this.renderable.addAnimation("idle", [0]);
+		this.renderable.addAnimation("broken", [1]);
+		this.renderable.setCurrentAnimation("idle");
 
 	},
 
 	update:function(delta) { //delta represents time from last update
 		if(this.health<=0) { //if health is less than or equal to 0, then our turret is dead
 			this.broken = true;
+			this.renderable.setCurrentAnimation("broken");
 		}
 		this.body.update(delta); //updates(herpderp)
 
@@ -90,7 +96,7 @@ game.PlayerBaseEntity = me.Entity.extend({
 game.EnemyBaseEntity = me.Entity.extend({ //same freakin thing as the player base entity
 	init : function(x, y, settings) { 
 		this._super(me.Entity, 'init', [x, y, {
-			image: "towers",
+			image: "tower",
 			width: 100,
 			height:100,
 			spritewidth: "100",
@@ -106,11 +112,16 @@ game.EnemyBaseEntity = me.Entity.extend({ //same freakin thing as the player bas
 
 		this.type = "EnemyBaseEntity";
 
+		this.renderable.addAnimation("idle", [0]);
+		this.renderable.addAnimation("broken", [1]);
+		this.renderable.setCurrentAnimation("idle");
+
 	},
 
 	update:function(delta) {
 		if(this.health<=0) {
 			this.broken = true;
+			this.setCurrentAnimation("broken");
 		}
 		this.body.update(delta);
 
