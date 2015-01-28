@@ -13,7 +13,7 @@ game.PlayerEntity = me.Entity.extend({
 		}]);
 
 		this.body.setVelocity(5, 20); //our character moves 5 units to the right
-		me.game.viewport.follow(this.pos, me.game.viewport.AXIS.BOTH);
+		me.game.viewport.follow(this.pos, me.game.viewport.AXIS.BOTH); //code makes it so that the camera position stays on our character
 
 		this.renderable.addAnimation("idle", [78]); //sets idle animation to number 78
 		this.renderable.addAnimation("walk", [117, 118, 119, 120, 121, 122, 123, 124, 125], 80); //walking uses animations 117-125 and 80 milliseconds through each frame
@@ -70,16 +70,16 @@ game.PlayerBaseEntity = me.Entity.extend({
 		console.log("init");
 		this.type = "PlayerBaseEntity"; //type for other collisions so we can check what we're running into when we're hitting otherstuff
 
-		this.renderable.addAnimation("idle", [0]);
-		this.renderable.addAnimation("broken", [1]);
-		this.renderable.setCurrentAnimation("idle");
+		this.renderable.addAnimation("idle", [0]); //animation number 0 is our idle animation
+		this.renderable.addAnimation("broken", [1]); //animation number 1 is our broken tower animation
+		this.renderable.setCurrentAnimation("idle"); //sets the current/starting animation to our idle animation stated above
 
 	},
 
 	update:function(delta) { //delta represents time from last update
 		if(this.health<=0) { //if health is less than or equal to 0, then our turret is dead
-			this.broken = true;
-			this.renderable.setCurrentAnimation("broken");
+			this.broken = true; 
+			this.renderable.setCurrentAnimation("broken"); //if our tower is dead, then animation turns from "idle" to "broken"
 		}
 		this.body.update(delta); //updates(herpderp)
 
