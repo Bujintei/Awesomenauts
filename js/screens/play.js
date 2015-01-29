@@ -12,8 +12,8 @@ game.PlayScreen = me.ScreenObject.extend({
 		me.game.world.addChild(player, 5); //adds him to our world // z variable is how close he is to the screen //higher this number the closer he is to the screen
 
 		me.input.bindKey(me.input.KEY.RIGHT, "right"); //binds our right arrow key to move our character to the right and only to the right hence the code
-		me.input.bindKey(me.input.KEY.LEFT, "left");
-		me.input.bindKey(me.input.KEY.SPACE, "jump");
+		me.input.bindKey(me.input.KEY.LEFT, "left"); //binds left key to move our character left
+		me.input.bindKey(me.input.KEY.SPACE, "jump"); //binds space to make our character jump
 		me.input.bindKey(me.input.KEY.A, "attack"); //binds our a key to attack
 
 		// add our HUD to the game world

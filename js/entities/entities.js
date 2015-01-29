@@ -30,20 +30,20 @@ game.PlayerEntity = me.Entity.extend({
 			//me.timer.tick makes the movement look smooth
 			this.body.vel.x += this.body.accel.x * me.timer.tick;
 			this.flipX(true); //flips our walking animation this is facing the left to the right instead
-			this.facing = "right";
+			this.facing = "right"; //when our character moves, he will be facing right and therefore move right
 		}
 		else if(me.input.isKeyPressed("left")) {
-			this.facing = "left";
+			this.facing = "left"; //when left arrow key is pressed, our character will face and move left
 			this.body.vel.x -= this.body.accel.x = me.timer.tick;
-			this.flipX(false);
+			this.flipX(false); //our animation already is facing left so it won't flip
 		}
 		else {
 			this.body.vel.x = 0;
 		}
 
 		if(me.input.isKeyPressed("jump")) {
-			if(!this.body.jumping && !this.body.falling) {
-				this.body.jumping = true;
+			if(!this.body.jumping && !this.body.falling) { //if we're not jumping or falling
+				this.body.jumping = true; //our character w ill jump
 				this.body.vel.y -= this.body.accel.y * me.timer.tick;
 			}
 		}
