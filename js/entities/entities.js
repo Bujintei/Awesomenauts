@@ -30,10 +30,24 @@ game.PlayerEntity = me.Entity.extend({
 			//me.timer.tick makes the movement look smooth
 			this.body.vel.x += this.body.accel.x * me.timer.tick;
 			this.flipX(true); //flips our walking animation this is facing the left to the right instead
+			this.facing = "right";
 		}
-		else{
+		else if(me.input.isKeyPressed("left")) {
+			this.facing = "left";
+			this.body.vel.x -= this.body.accel.x = me.timer.tick;
+			this.flipX(false);
+		}
+		else {
 			this.body.vel.x = 0;
 		}
+
+		if(me.input.isKeyPressed("jump")) {
+			if(!this.body.jumping && !this.body.falling) {
+				this.body.jumping = true;
+				this.body.vel.y -= this.body.accel.y * me.timer.tick;
+			}
+		}
+
 
 		if(me.input.isKeyPressed("attack")) { //attack inputted
 			if(!this.renderable.isCurrentAnimation("attack")) { //current animation is not attack
@@ -69,7 +83,7 @@ game.PlayerBaseEntity = me.Entity.extend({
 			spritewidth: "100",
 			spriteheight: "100",
 			getShape: function() {
-				return (new me.Rect(0, 0, 100, 100)).toPolygon();
+				return (new me.Rect(0, 0, 100, 70)).toPolygon();
 			}
 		}]);
 		this.broken = false; //tower has not been destroyed
@@ -111,7 +125,7 @@ game.EnemyBaseEntity = me.Entity.extend({ //same freakin thing as the player bas
 			spritewidth: "100",
 			spriteheight: "100",
 			getShape: function() {
-				return (new me.Rect(0, 0, 100, 100)).toPolygon();
+				return (new me.Rect(0, 0, 100, 70)).toPolygon();
 			}
 		}]);
 		this.broken = false;
