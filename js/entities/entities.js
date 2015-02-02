@@ -13,6 +13,7 @@ game.PlayerEntity = me.Entity.extend({
 		}]);
 
 		this.body.setVelocity(5, 20); //our character moves 5 units to the right
+		this.facing = "right";
 		me.game.viewport.follow(this.pos, me.game.viewport.AXIS.BOTH); //code makes it so that the camera position stays on our character
 
 		this.renderable.addAnimation("idle", [78]); //sets idle animation to number 78
@@ -29,26 +30,24 @@ game.PlayerEntity = me.Entity.extend({
 			//setVelocity() and multiplying it by me.timer.tick.
 			//me.timer.tick makes the movement look smooth
 			this.body.vel.x += this.body.accel.x * me.timer.tick;
+			this.facing = "right";
 			this.flipX(true); //flips our walking animation this is facing the left to the right instead
-			this.facing = "right"; //when our character moves, he will be facing right and therefore move right
 		}
 		else if(me.input.isKeyPressed("left")) {
-			this.facing = "left"; //when left arrow key is pressed, our character will face and move left
-			this.body.vel.x -= this.body.accel.x = me.timer.tick;
+			this.facing = "left";
+			this.body.vel.x -= this.body.accel.x * me.timer.tick;
 			this.flipX(false); //our animation already is facing left so it won't flip
 		}
 		else {
 			this.body.vel.x = 0;
 		}
 
-		if(me.input.isKeyPressed("jump")) {
-			if(!this.body.jumping && !this.body.falling) { //if we're not jumping or falling
-				this.body.jumping = true; //our character w ill jump
-				this.body.vel.y -= this.body.accel.y * me.timer.tick;
-			}
+		if(me.input.isKeyPressed("jump") && !this.jumping && !this.falling) { //if we click jump and if we're not jumping or falling
+			this.body.jumping = true; //our character will jump
+			this.body.vel.y -= this.body.accel.y * me.timer.tick;
 		}
 
-
+ 
 		if(me.input.isKeyPressed("attack")) { //attack inputted
 			if(!this.renderable.isCurrentAnimation("attack")) { //current animation is not attack
 				this.renderable.setCurrentAnimation("attack", "idle"); //sets our animation to run our attack animation then turns it back to idle
@@ -65,12 +64,27 @@ game.PlayerEntity = me.Entity.extend({
 			this.renderable.setCurrentAnimation("idle"); //if we're not walking, our animation would b idle
 		}
 
-		
-
+		me.collision.check(this, true, this.collideHandler.bind(this), true);
 		this.body.update(delta) ; //animation is updating on the fly
 
 		this._super(me.Entity, "update", [delta]); //updates our animations gfor me.Entity
 		return true;
+	},
+
+	collideHandler: function(response){
+		if(response.b.type==='EnemyBaseEntity') {
+			var ydif = this.pos.y - response.b.pos.y;
+			var xdif = this.pos.x - response.b.pos.x;
+
+			if(xdif>-35 && this.facing==='right' && (xdif<0)) {
+				this.body.vel.x = 0;
+				this.pos.x = this.pos.x -1;
+			}
+			else if(xdif<70 && this.facing==='left' && xdif>0) {
+				this.body.vel.x = 0;
+				this.pos.x = this.pos.x +1;
+			}
+		}
 	}
 });
 
