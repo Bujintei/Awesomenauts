@@ -13,7 +13,7 @@ game.PlayerEntity = me.Entity.extend({
 		}]);
 
 		this.body.setVelocity(5, 20); //our character moves 5 units to the right
-		this.facing = "right";
+		this.facing = "right"; //when our character spawns, our character will face right
 		me.game.viewport.follow(this.pos, me.game.viewport.AXIS.BOTH); //code makes it so that the camera position stays on our character
 
 		this.renderable.addAnimation("idle", [78]); //sets idle animation to number 78
@@ -30,11 +30,11 @@ game.PlayerEntity = me.Entity.extend({
 			//setVelocity() and multiplying it by me.timer.tick.
 			//me.timer.tick makes the movement look smooth
 			this.body.vel.x += this.body.accel.x * me.timer.tick;
-			this.facing = "right";
+			this.facing = "right"; //when the right key is inputed, our character will face the right side and then move to the right.
 			this.flipX(true); //flips our walking animation this is facing the left to the right instead
 		}
 		else if(me.input.isKeyPressed("left")) {
-			this.facing = "left";
+			this.facing = "left"; //when the left key is inputed, our character will face left and then move left all in one go
 			this.body.vel.x -= this.body.accel.x * me.timer.tick;
 			this.flipX(false); //our animation already is facing left so it won't flip
 		}
@@ -72,15 +72,15 @@ game.PlayerEntity = me.Entity.extend({
 	},
 
 	collideHandler: function(response){
-		if(response.b.type==='EnemyBaseEntity') {
-			var ydif = this.pos.y - response.b.pos.y;
-			var xdif = this.pos.x - response.b.pos.x;
+		if(response.b.type==='EnemyBaseEntity') { //checks if we're colliding with 'EnemyBaseEntity'
+			var ydif = this.pos.y - response.b.pos.y; //represents difference between player y position and the enemy base y position
+			var xdif = this.pos.x - response.b.pos.x; //represents difference between player x position and the enemy base x position
 
-			if(xdif>-35 && this.facing==='right' && (xdif<0)) {
+			if(xdif>-35 && this.facing==='right' && (xdif<0)) { //if xdif is greater than -35 and facing right (xdif is less than 0)
 				this.body.vel.x = 0;
 				this.pos.x = this.pos.x -1;
 			}
-			else if(xdif<70 && this.facing==='left' && xdif>0) {
+			else if(xdif<70 && this.facing==='left' && xdif>0) { //if ydif is less than 70 and facing left (xdif greater than 0)
 				this.body.vel.x = 0;
 				this.pos.x = this.pos.x +1;
 			}
