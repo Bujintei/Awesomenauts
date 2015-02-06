@@ -76,7 +76,11 @@ game.PlayerEntity = me.Entity.extend({
 			var ydif = this.pos.y - response.b.pos.y; //represents difference between player y position and the enemy base y position
 			var xdif = this.pos.x - response.b.pos.x; //represents difference between player x position and the enemy base x position
 
-			if(xdif>-35 && this.facing==='right' && (xdif<0)) { //if xdif is greater than -35 and facing right (xdif is less than 0)
+			if(ydif<-40 && xdif<70 && xdif>-35){
+				this.body.falling = false;
+				this.body.vel.y = -1;
+			}
+			else if(xdif>-35 && this.facing==='right' && (xdif<0)) { //if xdif is greater than -35 and facing right (xdif is less than 0)
 				this.body.vel.x = 0;
 				this.pos.x = this.pos.x -1;
 			}
