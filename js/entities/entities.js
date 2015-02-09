@@ -14,6 +14,9 @@ game.PlayerEntity = me.Entity.extend({
 
 		this.body.setVelocity(5, 20); //our character moves 5 units to the right
 		this.facing = "right"; //when our character spawns, our character will face right
+		this.now = new Date().getTime();
+		this.lastHit = this.now;
+		this.lastAttack = new Date().getTime();
 		me.game.viewport.follow(this.pos, me.game.viewport.AXIS.BOTH); //code makes it so that the camera position stays on our character
 
 		this.renderable.addAnimation("idle", [78]); //sets idle animation to number 78
@@ -25,6 +28,7 @@ game.PlayerEntity = me.Entity.extend({
 	},
 
 	update: function(delta) {
+		this.now = new Date().getTime();
 		if(me.input.isKeyPressed("right")) {
 			//adds to the position of my x by the velocity defined above in
 			//setVelocity() and multiplying it by me.timer.tick.
@@ -55,12 +59,12 @@ game.PlayerEntity = me.Entity.extend({
 			}
 		}
 		
-		else if(this.body.vel.x !== 0 ) { //only goes to walk animation if hes moving
+		else if(this.body.vel.x !== 0 && !this.renderable.isCurrentAnimation("attack") ) { //only goes to walk animation if hes moving
 			if(!this.renderable.isCurrentAnimation("walk")) { //don't start walking animation if you are already walking
 			this.renderable.setCurrentAnimation("walk");
 			}
 		}
-		else{
+		else if (!this.renderable.isCurrentAnimation("attack")) {
 			this.renderable.setCurrentAnimation("idle"); //if we're not walking, our animation would b idle
 		}
 
@@ -87,6 +91,11 @@ game.PlayerEntity = me.Entity.extend({
 			else if(xdif<70 && this.facing==='left' && xdif>0) { //if ydif is less than 70 and facing left (xdif greater than 0)
 				this.body.vel.x = 0;
 				this.pos.x = this.pos.x +1;
+			}
+
+			if(this.renderable.isCurrentAnimation("attack") && this.now-this.lastHit >= 1000) {
+				this.lastHit = this.now;
+				response.b.loseHealth();
 			}
 		}
 	}
@@ -162,7 +171,7 @@ game.EnemyBaseEntity = me.Entity.extend({ //same freakin thing as the player bas
 	update:function(delta) {
 		if(this.health<=0) {
 			this.broken = true;
-			this.setCurrentAnimation("broken");
+			this.renderable.setCurrentAnimation("broken");
 		}
 		this.body.update(delta);
 
@@ -172,6 +181,10 @@ game.EnemyBaseEntity = me.Entity.extend({ //same freakin thing as the player bas
 
 	onCollision: function() {
 		
+	},
+
+	loseHealth: function() {
+		this.health--;
 	}
 
 });
