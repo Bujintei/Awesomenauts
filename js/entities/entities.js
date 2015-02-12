@@ -117,8 +117,7 @@ game.PlayerBaseEntity = me.Entity.extend({
 		this.health = 10; //sets its hp to 10
 		this.alwaysUpdate = true; //always updates even if its not on screen
 		this.body.onCollision = this.onCollision.bind(this); //if you can colide with turret/tower
-		console.log("init");
-		this.type = "PlayerBaseEntity"; //type for other collisions so we can check what we're running into when we're hitting otherstuff
+		this.type = "PlayerBase"; //type for other collisions so we can check what we're running into when we're hitting otherstuff
 
 		this.renderable.addAnimation("idle", [0]); //animation number 0 is our idle animation
 		this.renderable.addAnimation("broken", [1]); //animation number 1 is our broken tower animation
@@ -135,6 +134,10 @@ game.PlayerBaseEntity = me.Entity.extend({
 
 		this._super(me.Entity, "update", [delta]); //call super in any update function and pass it as a update function then re
 		return true;
+	},
+
+	loseHealth: function(damage) {
+		this.health = this.health - damage;
 	},
 
 	onCollision: function() {
@@ -204,7 +207,9 @@ game.EnemyCreep = me.Entity.extend({
 		}]);
 		this.health = 10;
 		this.alwaysUpdate = true;
-
+		this.attacking  = false;
+		this.lastHit = new Date().getTime();
+		this.now = new Date().getTime();
 		this.body.setVelocity(3, 20);
 
 		this.type = "EnemyCreep";
@@ -214,11 +219,26 @@ game.EnemyCreep = me.Entity.extend({
 	},
 
 	update: function(delta) {
+		this.now = new Date().getTime();
 		this.body.vel.x -= this.body.accel.x * me.timer.tick;
+		me.collision.check(this, true, this.collideHandler.bind(this), true);
 		this.body.update(delta);
 		this._super(me.Entity, "update", [delta]);
 		return true;
 
+	},
+
+	collideHandler: function(response) {
+		if(response.b.type==='PlayerBase') {
+			this.attacking=true;
+			this.lastAttacking=this.now;
+			this.body.vel.x = 0;
+			this.pos.x = this.pos.x + 1;
+			if((this.now-this.lastHit >= 1000)) {
+				this.lastHit = this.now;
+				response.b.loseHealth(1);
+			}		
+		} 
 	}
 
 });
