@@ -11,14 +11,14 @@ game.PlayerEntity = me.Entity.extend({
 				// 0's are top corners and 64's are the numbers representing the width of the height of the box we're using
 			}
 		}]);
-
+		this.type = "PlayerEntity";
+		this.health = 20;
 		this.body.setVelocity(5, 20); //our character moves 5 units to the right
 		this.facing = "right"; //when our character spawns, our character will face right
 		this.now = new Date().getTime();
 		this.lastHit = this.now;
 		this.lastAttack = new Date().getTime();
 		me.game.viewport.follow(this.pos, me.game.viewport.AXIS.BOTH); //code makes it so that the camera position stays on our character
-
 		this.renderable.addAnimation("idle", [78]); //sets idle animation to number 78
 		this.renderable.addAnimation("walk", [117, 118, 119, 120, 121, 122, 123, 124, 125], 80); //walking uses animations 117-125 and 80 milliseconds through each frame
 		this.renderable.addAnimation("attack", [65, 66, 67, 68, 69, 70, 71, 72], 80); //attack animation uses animations 65-72 and 80 milliseconds through each frame
@@ -73,6 +73,11 @@ game.PlayerEntity = me.Entity.extend({
 
 		this._super(me.Entity, "update", [delta]); //updates our animations gfor me.Entity
 		return true;
+	},
+
+	loseHealth: function(damage) {
+		this.health = this.health - damage;
+		console.log(this.health);
 	},
 
 	collideHandler: function(response){
@@ -231,16 +236,26 @@ game.EnemyCreep = me.Entity.extend({
 	collideHandler: function(response) {
 		if(response.b.type==='PlayerBase') {
 			this.attacking=true;
-			this.lastAttacking=this.now;
 			this.body.vel.x = 0;
 			this.pos.x = this.pos.x + 1;
 			if((this.now-this.lastHit >= 1000)) {
 				this.lastHit = this.now;
 				response.b.loseHealth(1);
 			}		
-		} 
+		}
+		else if (response.b.type==='PlayerEntity') {
+			var xdif = this.pos.x - response.b.pos.x;
+			this.attacking=true;
+			if(xdif>0) {
+				this.pos.x = this.pos.x + 1;
+				this.body.vel.x = 0;
+			}
+			if((this.now-this.lastHit >= 1000) && xdif>0) {
+				this.lastHit = this.now;
+				response.b.loseHealth(1);	
+			}
+		}	
 	}
-
 });
 
 game.GameManager = Object.extend({
