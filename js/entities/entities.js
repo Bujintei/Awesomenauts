@@ -104,29 +104,28 @@ game.PlayerEntity = me.Entity.extend({
 			}
 		}
 		else if(response.b.type==='EnemyCreep') {
-				var xdif = this.pos.x - response.b.pos.x;
-				var ydif = this.pos.y - response.b.pos.y;
+			var xdif = this.pos.x - response.b.pos.x;
+			var ydif = this.pos.y - response.b.pos.y;
 
-				if (xdif>0) {
-					this.pos.x = this.pos.x +1;
-					if(this.facing==="left") {
-						this.body.vel.x = 0;
-					}
-				}
-				else{
-					this.pos.x = this.pos.x -1;
-					if(this.facing==="right") {
-						this.body.vel.x = 0;
-					}
-				}
-				if(this.renderable.isCurrentAnimation("attack") && this.now-this.lastHit >=1000 
-					&& (Math.abs(ydif) <=40) && 
-					((xdif>0) && this.facing==="left") || ((xdif<0) && this.facing==="right"))
-					{
-					this.lastHit = this.now;
-					response.b.loseHealth(1);
+			if (xdif>0) {
+				this.pos.x = this.pos.x +1;
+				if(this.facing==="left") {
+					this.body.vel.x = 0;
 				}
 			}
+			else{
+				this.pos.x = this.pos.x - 1;
+				if(this.facing==="right") {
+					this.body.vel.x = 0;
+				}
+			}
+			if(this.renderable.isCurrentAnimation("attack") && this.now-this.lastHit >= 1000 
+			&& (Math.abs(ydif) <=40) && 
+			((xdif>0) && this.facing==="left") || ((xdif<0) && this.facing==="right") ){
+				this.lastHit = this.now;
+				response.b.loseHealth(1);
+			}
+		}
 	}
 });
 
