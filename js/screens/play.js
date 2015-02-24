@@ -8,8 +8,7 @@ game.PlayScreen = me.ScreenObject.extend({
 
 		me.levelDirector.loadLevel("level01"); //tells us which map its going to load
 
-		var player = me.pool.pull("player", 0, 420, {}); //pull player from pool.register in game.js and puts what area we spawn him in
-		me.game.world.addChild(player, 5); //adds him to our world // z variable is how close he is to the screen //higher this number the closer he is to the screen
+		this.resetPlayer(0, 420);
 
 		var gamemanager = me.pool.pull("GameManager", 0, 0, {});
 		me.game.world.addChild(gamemanager, 0);
@@ -31,5 +30,10 @@ game.PlayScreen = me.ScreenObject.extend({
 	onDestroyEvent: function() {
 		// remove the HUD from the game world
 		me.game.world.removeChild(this.HUD);
-	}
+	},
+
+	resetPlayer: function(x, y) {
+		game.data.player = me.pool.pull("player", x, y, {}); 
+		me.game.world.addChild(game.data.player, 5);
+	}	
 });
