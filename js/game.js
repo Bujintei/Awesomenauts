@@ -23,6 +23,12 @@ var game = {
 		creepMoveSpeed: 5,
 		GameManager: "",
 		player: "",
+		exp: 0,
+		gold: 300,
+		exp1: 0,
+		exp2: 0,
+		exp3: 0,
+		exp4: 0,
 	},
 	
 	

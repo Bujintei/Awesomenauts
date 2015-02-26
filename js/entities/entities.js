@@ -18,6 +18,7 @@ game.PlayerEntity = me.Entity.extend({
 		this.now = new Date().getTime();
 		this.lastHit = this.now;
 		this.dead = false;
+		this.attack = game.data.playerAttack1;
 		this.lastAttack = new Date().getTime();
 		me.game.viewport.follow(this.pos, me.game.viewport.AXIS.BOTH); //code makes it so that the camera position stays on our character
 		this.renderable.addAnimation("idle", [78]); //sets idle animation to number 78
@@ -82,7 +83,6 @@ game.PlayerEntity = me.Entity.extend({
 	},
 
 	loseHealth: function(damage) {
-		console.log(this.health);
 		this.health = this.health - damage;
 	},
 
@@ -128,6 +128,13 @@ game.PlayerEntity = me.Entity.extend({
 				((xdif>0) && this.facing === 'left') || ((xdif < 0 ) && this.facing === 'right')
 				)){
 				this.lastHit = this.now;
+				//if the creeps health is less than out attack, execute code in if statement
+				if(response.b.health <= game.data.playerAttack1) {
+					//adds twenty gold for a creep kill
+					game.data.gold += 15;
+					console.log("Current gold: " + game.data.gold);
+				}
+
 				response.b.loseHealth(game.data.playerAttack1);
 			};
 		}
@@ -257,7 +264,6 @@ game.EnemyCreep = me.Entity.extend({
 	},
 
 	update: function(delta) {
-		console.log(this.health);
 		if(this.health <= 0) {
 			me.game.world.removeChild(this);
 		}
@@ -299,7 +305,7 @@ game.GameManager = Object.extend({
 	init: function(x, y, settings) {
 		this.now = new Date().getTime();
 		this.lastCreep = new Date().getTime();
-
+		this.paused = false;
 		this.alwaysUpdate = true;
 	},
 
@@ -307,9 +313,14 @@ game.GameManager = Object.extend({
 		this.now = new Date().getTime();
 
 		if(game.data.player.dead) {
-			console.log(this.dead = true);
+			//console.log(this.dead = true);
 			me.game.world.removeChild(game.data.player);
 			me.state.current().resetPlayer(10, 0);
+		}
+
+		if(Math.round(this.now/1000)%10 ===0 && (this.now - this.lastCreep >= 1000)) {
+			game.data.gold += 2;
+			console.log("Current gold: " + game.data.gold);
 		}
 
 		if(Math.round(this.now/1000)%10 ===0 && (this.now - this.lastCreep >= 1000)) {
