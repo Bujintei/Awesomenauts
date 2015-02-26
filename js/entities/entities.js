@@ -1,5 +1,19 @@
 game.PlayerEntity = me.Entity.extend({
 	init:function(x, y, settings){  //our constructor function
+		this.setSuper();
+		this.setPlayerTimers();
+		this.setAttributes();
+		this.type = "PlayerEntity";
+		this.setFlags(); //flags are stuff that has one value like true/false or right/left
+
+		me.game.viewport.follow(this.pos, me.game.viewport.AXIS.BOTH); //code makes it so that the camera position stays on our character
+
+		this.addAnimation();
+
+		this.renderable.setCurrentAnimation("idle"); //sets our starting animation as idle
+	},
+
+	setSuper: function() {
 		this._super(me.Entity, 'init', [x, y, { //reaching into the constructor of Entity
 			image: "player",  // "player" in resources.js
 			width: 64, //how much space should they reserve for the sprite
@@ -11,22 +25,29 @@ game.PlayerEntity = me.Entity.extend({
 				// 0's are top corners and 64's are the numbers representing the width of the height of the box we're using
 			}
 		}]);
-		this.type = "PlayerEntity";
-		this.health = game.data.playerHealth;
-		this.body.setVelocity(game.data.playerMoveSpeed, 20); //our character moves 5 units to the right
-		this.facing = "right"; //when our character spawns, our character will face right
+	},
+
+	setPlayerTimers: function() {
 		this.now = new Date().getTime();
 		this.lastHit = this.now;
-		this.dead = false;
-		this.attack = game.data.playerAttack1;
 		this.lastAttack = new Date().getTime();
-		me.game.viewport.follow(this.pos, me.game.viewport.AXIS.BOTH); //code makes it so that the camera position stays on our character
+	},
+
+	setAttributes: function() {
+		this.health = game.data.playerHealth;
+		this.body.setVelocity(game.data.playerMoveSpeed, 20); //our character moves 5 units to the right
+		this.attack = game.data.playerAttack1;
+	},
+
+	setFlags: function() {
+		this.facing = "right"; //when our character spawns, our character will face right
+		this.dead = false;
+	},
+
+	addAnimation: function() {
 		this.renderable.addAnimation("idle", [78]); //sets idle animation to number 78
 		this.renderable.addAnimation("walk", [117, 118, 119, 120, 121, 122, 123, 124, 125], 80); //walking uses animations 117-125 and 80 milliseconds through each frame
 		this.renderable.addAnimation("attack", [65, 66, 67, 68, 69, 70, 71, 72], 80); //attack animation uses animations 65-72 and 80 milliseconds through each frame
-
-		this.renderable.setCurrentAnimation("idle"); //sets our starting animation as idle
-
 	},
 
 	update: function(delta) {
