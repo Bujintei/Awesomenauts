@@ -42,6 +42,7 @@ game.PlayerEntity = me.Entity.extend({
 	setFlags: function() {
 		this.facing = "right"; //when our character spawns, our character will face right
 		this.dead = false;
+		this.attacking = false;
 	},
 
 	addAnimation: function() {
@@ -52,30 +53,11 @@ game.PlayerEntity = me.Entity.extend({
 
 	update: function(delta) {
 		this.now = new Date().getTime();
-
 		this.dead = checkIfDead();
-
 		this.checkKeyPressesAndMove();
- 
-		if(me.input.isKeyPressed("attack")) { //attack inputted
-			if(!this.renderable.isCurrentAnimation("attack")) { //current animation is not attack
-				this.renderable.setCurrentAnimation("attack", "idle"); //sets our animation to run our attack animation then turns it back to idle
-				this.renderable.setAnimationFrame(); //makes it so that the next time we start the animation, it starts from the first animation and not wherever we left off when we switched to another animation
-			}
-		}
-		
-		else if(this.body.vel.x !== 0 && !this.renderable.isCurrentAnimation("attack") ) { //only goes to walk animation if hes moving
-			if(!this.renderable.isCurrentAnimation("walk")) { //don't start walking animation if you are already walking
-			this.renderable.setCurrentAnimation("walk");
-			}
-		}
-		else if (!this.renderable.isCurrentAnimation("attack")) {
-			this.renderable.setCurrentAnimation("idle"); //if we're not walking, our animation would b idle
-		}
-
+ 		this.setAnimation();
 		me.collision.check(this, true, this.collideHandler.bind(this), true);
 		this.body.update(delta) ; //animation is updating on the fly
-
 		this._super(me.Entity, "update", [delta]); //updates our animations gfor me.Entity
 		return true;
 	},
@@ -101,6 +83,8 @@ game.PlayerEntity = me.Entity.extend({
 		if(me.input.isKeyPressed("jump") && !this.jumping && !this.falling) { //if we click jump and if we're not jumping or falling
 			this.jump();
 		}
+
+		this.attacking = me.input.isKeyPressed("attack");
 	},
 
 	moveRight: function() {
@@ -121,6 +105,23 @@ game.PlayerEntity = me.Entity.extend({
 	jump: function() {
 		this.body.jumping = true; //our character will jump
 		this.body.vel.y -= this.body.accel.y * me.timer.tick;
+	},
+
+	setAnimation: function() {
+		if(this.attacking) { 
+			if(!this.renderable.isCurrentAnimation("attack")) { //current animation is not attack
+				this.renderable.setCurrentAnimation("attack", "idle"); //sets our animation to run our attack animation then turns it back to idle
+				this.renderable.setAnimationFrame(); //makes it so that the next time we start the animation, it starts from the first animation and not wherever we left off when we switched to another animation
+			}
+		}		
+		else if(this.body.vel.x !== 0 && !this.renderable.isCurrentAnimation("attack") ) { //only goes to walk animation if hes moving
+			if(!this.renderable.isCurrentAnimation("walk")) { //don't start walking animation if you are already walking
+			this.renderable.setCurrentAnimation("walk");
+			}
+		}
+		else if (!this.renderable.isCurrentAnimation("attack")) {
+			this.renderable.setCurrentAnimation("idle"); //if we're not walking, our animation would b idle
+		}
 	},
 
 	loseHealth: function(damage) {
