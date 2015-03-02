@@ -1,6 +1,6 @@
 game.PlayerEntity = me.Entity.extend({
 	init:function(x, y, settings){  //our constructor function
-		this.setSuper();
+		this.setSuper(x, y);
 		this.setPlayerTimers();
 		this.setAttributes();
 		this.type = "PlayerEntity";
@@ -13,7 +13,7 @@ game.PlayerEntity = me.Entity.extend({
 		this.renderable.setCurrentAnimation("idle"); //sets our starting animation as idle
 	},
 
-	setSuper: function() {
+	setSuper: function(x, y) {
 		this._super(me.Entity, 'init', [x, y, { //reaching into the constructor of Entity
 			image: "player",  // "player" in resources.js
 			width: 64, //how much space should they reserve for the sprite
@@ -53,7 +53,7 @@ game.PlayerEntity = me.Entity.extend({
 
 	update: function(delta) {
 		this.now = new Date().getTime();
-		this.dead = checkIfDead();
+		this.dead = this.checkIfDead();
 		this.checkKeyPressesAndMove();
  		this.setAnimation();
 		me.collision.check(this, true, this.collideHandler.bind(this), true);
