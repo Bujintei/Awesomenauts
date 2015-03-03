@@ -16,6 +16,9 @@ game.PlayScreen = me.ScreenObject.extend({
 		var heroDeathManager = me.pool.pull("HeroDeathManager", 0, 0, {});
 		me.game.world.addChild(heroDeathManager, 0);
 
+		var experienceManager = me.pool.pull("ExperienceManager", 0, 0, {});
+		me.game.world.addChild(experienceManager, 0);
+
 		me.input.bindKey(me.input.KEY.RIGHT, "right"); //binds our right arrow key to move our character to the right and only to the right hence the code
 		me.input.bindKey(me.input.KEY.LEFT, "left"); //binds left key to move our character left
 		me.input.bindKey(me.input.KEY.SPACE, "jump"); //binds space to make our character jump

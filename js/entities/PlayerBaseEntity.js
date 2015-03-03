@@ -25,6 +25,7 @@ game.PlayerBaseEntity = me.Entity.extend({
 	update:function(delta) { //delta represents time from last update
 		if(this.health<=0) { //if health is less than or equal to 0, then our turret is dead
 			this.broken = true; 
+			game.data.win = false;
 			this.renderable.setCurrentAnimation("broken"); //if our tower is dead, then animation turns from "idle" to "broken"
 		}
 		this.body.update(delta); //updates(herpderp)
