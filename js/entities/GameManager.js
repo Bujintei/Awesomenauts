@@ -1,4 +1,4 @@
-game.GameManager = Object.extend({
+game.GameTimerManager = Object.extend({
 	init: function(x, y, settings) {
 		this.now = new Date().getTime();
 		this.lastCreep = new Date().getTime();
@@ -7,7 +7,7 @@ game.GameManager = Object.extend({
 	},
 
 	update: function() {
-		this.now = new Date().getTime();
+		this.now = new Date().getTime(); 
 
 		this.goldTimerCheck();
 		this.creepTimerCheck();
@@ -49,17 +49,21 @@ game.HeroDeathManager = Object.extend({
 game.ExperienceManager = Object.extend({
 	init: function(x, y, settings) {
 		this.alwaysUpdate = true;
+		this.gameOver = false;
 	},
 
 	update: function() {
-		if(game.data.win === true) {
+		if(game.data.win === true && !this.gameOver) {
 			game.data.exp += 10;
+			this.gameOver = true;
 		}
-		else if(game.data.win === false) {
+		else if(game.data.win === false && !this.gameOver) {
 			game.data.exp += 1;
+			this.gameOver = true;
 		}
+		console.log(game.data.exp);
 
 		return true;
 	}
 
-});
+}); 
