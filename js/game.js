@@ -6,9 +6,9 @@ var game = {
 	data : {
 		// score
 		score : 0,
-		enemyBaseHealth: 10,
-		playerBaseHealth: 10,
-		enemyCreepHealth: 10,
+		enemyBaseHealth: 1,
+		playerBaseHealth: 1,
+		enemyCreepHealth: 1,
 		playerHealth: 10,
 		enemyCreepAttack: 1,
 		playerAttack: 1,
@@ -31,7 +31,7 @@ var game = {
 		exp2: 0,
 		exp3: 0,
 		exp4: 0,
-		win: ""
+		win: "",
 	},
 	
 	
