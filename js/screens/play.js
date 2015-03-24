@@ -19,6 +19,13 @@ game.PlayScreen = me.ScreenObject.extend({
 		var experienceManager = me.pool.pull("ExperienceManager", 0, 0, {});
 		me.game.world.addChild(experienceManager, 0);
 
+		var spendGold = me.pool.pull("SpendGold", 0, 0, {});
+		me.game.world.addChild(spendGold, 0);
+
+		me.input.bindKey(me.input.KEY.B, "buy");
+		me.input.bindKey(me.input.KEY.Q, "skill1");
+		me.input.bindKey(me.input.KEY.W, "skill2");
+		me.input.bindKey(me.input.KEY.E, "skill3");
 		me.input.bindKey(me.input.KEY.RIGHT, "right"); //binds our right arrow key to move our character to the right and only to the right hence the code
 		me.input.bindKey(me.input.KEY.LEFT, "left"); //binds left key to move our character left
 		me.input.bindKey(me.input.KEY.SPACE, "jump"); //binds space to make our character jump
