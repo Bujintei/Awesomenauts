@@ -9,7 +9,7 @@
 	);
 	$username = filter_input(INPUT_POST, "username", FILTER_SANITIZE_STRING);	
 	$password = filter_input(INPUT_POST, "password", FILTER_SANITIZE_STRING);
-	$query = $_SESSION["connection"]->query("SELECT * FROM users WHERE username = '$username'");
+	$query = $_SESSION["connection"]->query("SELECT * FROM users WHERE BINARY username = '$username'");
 	if ($query->num_rows == 1) {
 		$row = $query->fetch_array();
 		if ($row["password"] === crypt($password, $row["salt"])) {
@@ -21,7 +21,7 @@
 			$array["exp4"] = $row["exp4"];
 			$_SESSION["name"] = $username;
 			echo json_encode($array);
-			header("Location: " . $path . "index.php");
+			//header("Location: " . $path . "index.php");
 		}
 		else {
 			echo "<p>Invalid username and password</p>";

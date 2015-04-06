@@ -26,7 +26,7 @@
 				$query = $this->connection->query("CREATE DATABASE $database");
 			if ($query) {
 				//* Echoes text if a database is created.
-				echo "<p>Successfully created database: " . $database . "</p>";
+				//echo "<p>Successfully created database: " . $database . "</p>";
 			}
 		}
 			/*else {
