@@ -20,7 +20,7 @@ game.SpendExp = me.ScreenObject.extend({
 
 			draw: function(renderer) {
 				this.font.draw(renderer.getContext(), "PRESS F1-F4 TO BUY, F5 TO SKIP", this.pos.x, this.pos.y);
-				this.font.draw(renderer.getContext(), "CURRENT EXP: " + me.save.exp.toString(), this.pos.x + 100, this.pos.y + 50);
+				this.font.draw(renderer.getContext(), "CURRENT EXP: " + game.data.exp.toString(), this.pos.x + 100, this.pos.y + 50);
 				this.font.draw(renderer.getContext(), "F1: INCREASE GOLD PRODUCTION! CURRENT LEVEL: " + game.data.exp1.toString() + " COST: " + exp1cost, this.pos.x , this.pos.y + 100);
 				this.font.draw(renderer.getContext(), "F2: ADD STARTING GOLD! CURRENT LEVEL: " + game.data.exp2.toString() + " COST: " + ((game.data.exp2 +1) * 10), this.pos.x , this.pos.y + 150);
 				this.font.draw(renderer.getContext(), "F3: INCREASE ATTACK DAMAGE! CURRENT LEVEL: " + game.data.exp3.toString() + " COST: " + ((game.data.exp3 +1) * 10), this.pos.x , this.pos.y + 200);
