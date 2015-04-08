@@ -111,12 +111,15 @@ game.PlayerEntity = me.Entity.extend({
 
 	checkAbilityKeys: function() {
 		if(me.input.isKeyPressed("skill1")){
+			//grants a few seconds of increased agility to our player
 			//this.speedBurst();
 		}
 		else if(me.input.isKeyPressed("skill2")){
+			//will destroy a creep
 			//this.eatCreep();
 		}
 		else if(me.input.isKeyPressed("skill3")){
+			//throw a spear to presumably damage/kill a minion
 			this.throwSpear();
 		}
 	},
