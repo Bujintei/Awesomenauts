@@ -120,15 +120,16 @@ game.PlayerEntity = me.Entity.extend({
 		}
 		else if(me.input.isKeyPressed("skill3")){
 			//throw a spear to presumably damage/kill a minion
+			console.log("skill3");
 			this.throwSpear();
 		}
 	},
 
 	throwSpear: function(){
-		if(this.lastSpear >= game.data.spearTimer && game.data.ability3 >= 0){
+		if((this.now-this.lastSpear) >= game.data.spearTimer*1000 && game.data.ability3 > 0){
 			this.lastSpear = this.now;
-			var spear = me.pool.pull("spear", this.pos.x, this.pos.y, {});
-			me.game.world.addChild(spear, 10);
+				var spear = me.pool.pull("spear", this.pos.x, this.pos.y, {}, this.facing);
+				me.game.world.addChild(spear, 10);
 		}
 	},
 

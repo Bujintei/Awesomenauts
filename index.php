@@ -6,6 +6,7 @@
 	<head>
 		<title>melonJS Template</title>
 		<link rel="stylesheet" type="text/css" media="screen" href="index.css">
+		<link href='http://fonts.googleapis.com/css?family=Share+Tech+Mono' rel='stylesheet' type='text/css'>
 		<meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<meta name="mobile-web-app-capable" content="yes">
