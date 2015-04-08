@@ -59,6 +59,16 @@ game.TitleScreen = me.ScreenObject.	extend({
 		}));
 
 		me.game.world.addChild(game.data.option2);
+
+		me.game.world.addChild(new (me.Renderable.extend({
+			init: function() {
+				this._super(me.Renderable, 'init', [790, 580, 0, 0]);
+				this.font = new me.Font("Share Tech Mono", 15, "#E1F92E");
+			},
+			draw: function(renderer) {
+				this.font.draw(renderer.getContext(), "Crappier version by Brandon Nguyen", this.pos.x, this.pos.y);
+			}
+		})));
 },
 	
 	

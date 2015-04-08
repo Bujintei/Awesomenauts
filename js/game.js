@@ -8,13 +8,13 @@ var game = {
 		score : 0,
 		option1: "",
 		option2: "",
-		enemyBaseHealth: 1,
-		playerBaseHealth: 1,
-		enemyCreepHealth: 1,
-		playerHealth: 10,
+		enemyBaseHealth: 20,
+		playerBaseHealth:15,
+		enemyCreepHealth: 10,
+		playerHealth: 20,
 		enemyCreepAttack: 1,
 		playerAttack: 1,
-		playerAttack1: 3,
+		playerAttack1: 5,
 		//playerBaseDamage: 10,
 		//playerBaseHealth: 100,
 		//playerBaseSpeed: 3,
@@ -91,6 +91,7 @@ var game = {
 		me.pool.register("ExperienceManager", game.ExperienceManager);
 		me.pool.register("SpendGold", game.SpendGold);
 		me.pool.register("spear", game.SpearThrow);
+		//me.pool.register("AllyCreep", game.AllyCreep, true);
 
 		me.state.set(me.state.MENU, new game.TitleScreen());
 		me.state.set(me.state.PLAY, new game.PlayScreen());

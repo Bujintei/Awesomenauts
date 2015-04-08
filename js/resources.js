@@ -15,6 +15,7 @@ game.resources = [
 	 {name: "load-screen", type:"image", src: "data/img/login.png"},
 	 {name: "new-screen", type:"image", src: "data/img/cyborg-girl.png"},
 	 {name: "spear", type:"image", src: "data/img/spear.png"},
+	 //{name: "creep2", type:"image", src: "data/img/gloop.png"},
 	 //graphics for Awesomenauts that the game would use.
 
 
@@ -28,7 +29,7 @@ game.resources = [
 	 * {name: "example01", type: "tmx", src: "data/map/example01.tmx"},
 	 * {name: "example01", type: "tmx", src: "data/map/example01.json"},
  	 */
- 	 {name: "level01", type: "tmx", src: "data/map/test.tmx"},
+ 	 {name: "level01", type: "tmx", src: "data/map/level1.tmx"},
  	 //maps for our game
 
 	/* Background music. 

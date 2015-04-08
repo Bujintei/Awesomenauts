@@ -16,7 +16,7 @@ game.NewProfile = me.ScreenObject.extend({
 		me.game.world.addChild(new (me.Renderable.extend({
 			init: function() {
 				this._super(me.Renderable, 'init', [10, 10, 300, 50]);
-				this.font = new me.Font("Share Tech Mono", 26, "#E1F92E");
+				this.font = new me.Font("Share Tech Mono", 26, "#E62015");
 			},
 
 			draw: function(renderer) {
