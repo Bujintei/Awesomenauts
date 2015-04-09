@@ -4,6 +4,7 @@ game.TitleScreen = me.ScreenObject.	extend({
 	 */
 	onResetEvent: function() {	
 		me.game.world.addChild(new me.Sprite(0, 0, me.loader.getImage('title-screen')), -10); // TODO
+		me.audio.playTrack("DigiOST1");
 
 		game.data.option1 = new (me.Renderable.extend({
 			init: function() {
@@ -76,5 +77,6 @@ game.TitleScreen = me.ScreenObject.	extend({
 	 *  action to perform when leaving this screen (state change)
 	 */
 	onDestroyEvent: function() {
+		
 	}
 });

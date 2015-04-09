@@ -5,6 +5,7 @@ game.PlayScreen = me.ScreenObject.extend({
 	onResetEvent: function() {
 		// reset the score
 		game.data.score = 0;
+		me.audio.playTrack("DigiOST2");
 
 		me.levelDirector.loadLevel("level01"); //tells us which map its going to load
 
@@ -48,5 +49,6 @@ game.PlayScreen = me.ScreenObject.extend({
 	resetPlayer: function(x, y) {
 		game.data.player = me.pool.pull("player", x, y, {}); 
 		me.game.world.addChild(game.data.player, 5);
+		//me.audio.stopTrack();
 	}	
 });

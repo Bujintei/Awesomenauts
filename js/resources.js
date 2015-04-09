@@ -15,6 +15,7 @@ game.resources = [
 	 {name: "load-screen", type:"image", src: "data/img/login.png"},
 	 {name: "new-screen", type:"image", src: "data/img/cyborg-girl.png"},
 	 {name: "spear", type:"image", src: "data/img/spear.png"},
+	 {name: "minimap", type:"image", src: "data/img/minimap.png"},
 	 //{name: "creep2", type:"image", src: "data/img/gloop.png"},
 	 //graphics for Awesomenauts that the game would use.
 
@@ -36,6 +37,8 @@ game.resources = [
 	 * @example
 	 * {name: "example_bgm", type: "audio", src: "data/bgm/"},
 	 */	
+	 {name: "DigiOST1", type: "audio", src: "data/bgm/"},
+	 {name: "DigiOST2", type: "audio", src: "data/bgm/"},
 
 	/* Sound effects. 
 	 * @example

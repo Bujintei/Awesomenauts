@@ -35,5 +35,6 @@ game.LoadProfile = me.ScreenObject.extend({
 	onDestroyEvent: function() {
 		document.getElementById("input").style.visibility = "hidden";
 		document.getElementById("load").style.visibility = "hidden";
+		me.audio.stopTrack();
 	}
 });
